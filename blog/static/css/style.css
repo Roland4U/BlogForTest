@@ -1,0 +1,49 @@
+.admin-panel{
+    width: 30px;
+    height: 30px;
+    border: 1px solid #069;
+    border-radius: 2px;
+    position: fixed;
+    right: 20px;
+    top: 70px;
+    /* opacity: 0.5; */
+    background-color: rgba(52, 58, 64, 0.301);
+    /* transition: all; */
+    transition-duration: 0.3s;
+    padding: 10px;
+    
+}
+
+.admin-panel a {
+    display: none;
+    /* margin: 5px 0px; */
+    /* position: absolute; */
+    top: 100%;
+}
+
+.admin-panel:hover{
+    transform: scale(0.5s);
+    width: auto;
+    height: auto;
+    opacity: 1;
+    background-color: #343A40;
+    /* transition: width,height 0.5s ease;     */
+}
+
+.admin-panel:hover > a {
+    display: block;
+    margin: 5px 0px; 
+    top: 100%;
+}
+
+.admin-panel > span > i {
+
+    top: 4px;
+    left: 4px;
+    position: absolute;
+    opacity: 1;
+}
+
+.admin-panel:hover > span > i {
+    display: none;
+}

@@ -1,0 +1,29 @@
+{% extends 'blogapp/index.html' %}
+
+
+{% block content %}
+    
+    <div class="row m-3 d-flex align-content-start flex-wrap">
+        {% for tag in tags %}
+            <!-- <a class="btn btn-primary ml-1" href="{{ tag.get_absolute_url }}">{{ tag.title }}</a> -->
+            <div class="btn-group mb-2 pl-1 pr-1" style="height: 33px;">
+              <a class="btn btn-secondary btn-sm ml-2" href="{{ tag.get_absolute_url }}">
+                <p><strong>{{ tag.title|title }}</strong></p>
+              </a>
+              <button type="button" class="btn btn-sm btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="sr-only">Toggle Dropdown</span>
+              </button>
+
+              <!-- drop menu -->
+              <div class="dropdown-menu p-2 bg-dark">
+                <a class="btn btn-outline-primary text-primary dropdown-item-text rounded-0" href="{{ tag.get_absolute_url }}" style="font-size: 0.7em;">Read more</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="btn btn-outline-success text-success mb-1 dropdown-item-text rounded-0" href="{{ tag.get_edit_url }}" style="font-size: 0.7em;">Edit</a>
+                  <a class="btn btn-outline-danger text-danger dropdown-item-text btn-sm rounded-0" data-toggle="modal" data-target="#exampleModal" href="#" style="font-size: 0.7em;">Delete</a>
+              </div>
+            </div>
+        {% endfor %}
+    </div>
+        
+{% endblock content %}
+    

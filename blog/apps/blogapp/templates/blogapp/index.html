@@ -1,0 +1,161 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+  <!-- <link rel="icon" href="favicon.ico" type="/blog/apps/blogapp/templates" />     -->
+  <link rel="icon" href="http://faviconka.ru/ico/faviconka_ru_1255.png" type="image/x-icon" />
+  <!-- <link rel="shortcut icon" href="http://faviconka.ru/ico/faviconka_ru_1255.png" type="image/x-icon"> -->
+  <link rel="stylesheet" href="{% static "css/style.css" %}">
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/b32c2c4663.js" crossorigin="anonymous"></script>
+  <style>
+    .border1 {
+      border-width: 3px !important;
+    }
+
+    .btn {
+      transition: all;
+      transition-duration: 0.3s;
+    }
+
+    body {
+      min-width: 361px;
+    }
+  </style>
+  
+  
+  <title>
+    {% block title %} main {% endblock title %}
+  </title>
+</head>
+
+<body>
+  <script>
+    if (document.location.href.indexOf('#') != -1) {
+      $("#exampleModal").modal('show');
+    }
+  </script>
+  {% csrf_token %}
+  <nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark">
+    <a class=" btn btn-dark" href="{% url 'index' %}">Navbar</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link btn btn-dark" href="{% url 'index' %}">Home <span class="sr-only">(current)</span></a>
+      </li>
+        <li class="nav-item">
+          <a class="nav-link btn btn-dark" href="{% url 'tag_list' %}">Tags</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle btn btn-dark" href="#" id="navbarDropdown" role="button"
+          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dropdown
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link btn btn-dark disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+          Search
+        </button>
+      </form>
+    </div>
+  </nav>
+  
+  {% url "index" as base %}
+  {% url "post_del" as post_del %}
+  {% url "tag_del" as tag_del %}
+  {% if request.get_full_path == base %}
+  {% include "blogapp/carusel.html" %}
+  {% endif %}
+
+  {% if request.get_full_path == tag_del %}
+  <p>deleewfgvcxfhzodiks</p>
+    {#<script>
+      location.replace("https://www.google.com");
+    </script>#}
+  {% endif %}
+  
+  {% if request.get_full_path == post_del %}
+  {% include "blogapp/deletemodal.html" %}
+    
+    {% block tag_del %}
+    {% endblock tag_del %}
+    
+    {% elif request.get_full_path == tag_del %}
+      {% include "blogapp/deletemodal.html" %}
+      <meta http-equiv="refresh" content="{{ base }}#" />
+      
+      {% block post_del %}
+      {% endblock post_del %}
+  {% endif %}
+    
+<p>URL of this page: {{ request.get_full_path }} # :{{ request.path }}</p>
+  {% block content %}
+  <div class="col mb-5 d-flex">
+    <div class="card-deck">
+      <div class="border border-primary shadow rounded card bg-dark mb-3 m-5 p-4">
+        <div class="row row-cols-1 row-cols-md-3 ml-auto">
+          {% for post in posts %}
+          {% include "blogapp/post_card.html" %}
+
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endblock content %}
+
+  <div class="admin-panel">
+    <span style="font-size: 17pt; color: #19191a;">
+      <i class="fas fa-bars"></i>
+    </span>
+
+    <a href="admin" class="btn btn-info btn-sm">Admin</a>
+    {% block cpanel %}
+    <a href="{% block mc %}
+      
+    {% endblock mc %}" class="btn btn-light btn-sm">Create</a>
+    <a href="" class="btn btn-light btn-sm">Edit</a>
+    <a href="{% block md %}
+    {{ post.get_delete_url }}     
+    {% endblock md %}" class="btn btn-danger btn-sm">Delete</a>
+    {% endblock cpanel %}
+  </div>
+
+
+
+
+
+</body>
+
+</html>

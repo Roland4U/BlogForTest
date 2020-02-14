@@ -1,0 +1,66 @@
+<style>
+  .card-body{
+    max-height: 445px;
+  }
+
+  .post:hover > .card {
+    transition: all;
+    transition-duration: 0.3s; 
+    background-color: #cde9f0; !important
+
+  }
+
+</style>
+
+
+
+<div class="col mb-5 post">
+  <div class="card border border-primary d-flex" style="border-width: 2px !important;">
+
+    <!-- Example single danger button -->
+    <div class="btn-group"  style="width: 33px; height: 30px; left: 2px; justify-content: flex-end; position: relative;">
+      <!-- <button type="button" class="btn btn-dangerfas fa-ellipsis-v fa-align-center btn btn-light mt-2 ml-2 d-flex" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      </button> -->
+      <button type="button" class="fas fa-ellipsis-v fa-align-center btn btn-info rounded-right p-0 mt-2 ml-2 d-flex" id="PMenu" style="width: 10px; height: 21px; left: 2px; justify-content: center; font-size: 0.8em; align-items: center; padding-bottom: 3px;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a></a>
+      </button>
+      
+      <div class="dropdown-menu p-2 bg-dark border border-primary" style="width: 60px;">
+        <a class="btn btn-outline-primary btn-block text-primary dropdown-item-text rounded-0" href="{{ post.get_absolute_url }}" style="font-size: 0.7em;">Read more</a>
+        <div class="dropdown-divider border-secondary"></div>
+        <a class="btn btn-outline-success text-success mb-1 dropdown-item-text rounded-0" href="{{ post.get_edit_url }}" style="font-size: 0.7em;">Edit</a>
+        <a class="btn btn-outline-danger text-danger dropdown-item-text btn-sm rounded-0" data-toggle="modal" data-target="#exampleModal" href="#" style="font-size: 0.7em;">Delete</a>
+       
+      </div>
+    </div>
+
+{% block model_del_url %}
+    {{ post.get_delete_url }}
+{% endblock model_del_url %}
+
+    <img
+    src="https://i.ytimg.com/vi/QAUdrSrtbuI/hqdefault_live.jpg"
+    class="p-3 rounded card-img-top img-fluid"
+    style="border-radius: 20px!important;"
+  />
+  <div class="card-body">
+    <h5 class="card-title">{{ post.title }}</h5>
+    <p class="card-text">{{ post.body|truncatewords:15 }}</p>
+    <a class="btn btn-primary btn-sm btn-block pl-5 pr-5" href="{{ post.get_absolute_url }}"
+      >Read</a
+      >
+    </div>
+    <div class="card-footer">
+      <small class="text-muted">{{ post.pub_date }}   </small>
+      <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+        {% for tag in post.tags.all %}
+          <a class="btn btn-outline-info btn-sm" href="{{ tag.get_absolute_url }}" style="font-size: 0.6em;">{{ tag.title|title }}</a>
+        {% endfor %}
+
+      </div>
+     
+    </div>
+  </div>
+</div>
+
+

@@ -1,0 +1,43 @@
+{% extends 'blogapp/index.html' %}
+    
+{% block model_del_url %}
+    {{ tag.get_delete_url }}
+{% endblock model_del_url %}
+
+
+
+<div class="bg-secondary">
+  {% block content %}
+  
+  
+  {% if tag.posts.all %}
+    <div class="col mb-5">
+        <div class="card-deck">
+          <div class="border border-primary shadow rounded card bg-dark mb-3 m-5 p-4">
+            <div class="row row-cols-1 row-cols-md-3 ml-auto">
+
+              {% for post in tag.posts.all %}
+                {% include "blogapp/post_card.html" %}
+              {% endfor %}
+
+            </div>
+          </div>
+        </div>
+      </div>
+    {% else %}
+      <div class="container">
+        <div class="row justify-content-md-center mt-5">
+          <div class="alert alert-warning pr-5 pl-5 pb-3 pt-3" role="alert">
+            <h4>In Tag "{{ tag.title }}" not posts</h4>
+          </div>
+        </div>
+      </div>
+        
+  {% endif %}
+  
+{% endblock content %}
+</div>
+
+{% block md %}
+      {{ tag.get_delete_url }}
+    {% endblock md %}

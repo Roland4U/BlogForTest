@@ -1,0 +1,48 @@
+{% extends 'blogapp/index.html' %}
+
+
+<script type="text/javascript">
+// Popup window code
+function newPopup(url) {
+	popupWindow = window.open(
+		url,'popUpWindow','height=300,width=400,left=10,top=10,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes')
+}
+</script>
+<p><a href="JavaScript:newPopup('/javascript/examples/sample_popup.cfm');">Open a popup window</a></p>
+
+
+{% block content %}
+<div class="container">
+  <div class="row justify-content-md-center mt-2 mb-2">
+    <form action="{{ post.get_edit_url }}" method="post">
+        {% csrf_token %}
+
+        {% for field in form %}
+            <div class="form-group">
+                
+                {% if field.errors %}
+                    <div class="alert alert-danger pl-3 pr-5">
+                        {{ field.errors }}
+                    </div>
+                {% endif %}
+                    
+                {{ field.label }}
+                
+                
+                {{ field }}
+                {% if field.label == 'Tags' %}
+                    <br>
+                    <a class="related-widget-wrapper-link add-related text-center btn btn-info btn-sm text-light" id="add_id_tags"  title="Add another tag"><img src="/static/admin/img/icon-addlink.svg" alt="Add" onClick="MyWindow=window.open('{% url 'tag_new' %}','MyWindow','width=770,height=500'); return false;"> Add new tag</a>
+                  
+                {% endif %}
+
+            </div>
+          
+        {% endfor %}
+        <br>
+        <br>
+        <button type="submit" class="btn btn-primary">Edit post</button>
+    </form>
+  </div>
+</div>
+{% endblock content %}
